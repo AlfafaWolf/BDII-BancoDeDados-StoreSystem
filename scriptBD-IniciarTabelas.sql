@@ -70,7 +70,7 @@ create table Funcionario(
 	Data_Demissao date,
 	Salario number(5,2) not null,
 	id_funcionario number primary key,
-	tipo_Funcionario VARCHAR2(10) not null CHECK( tipo_Funcionario IN ('atendente', 'vendendor') ) 
+	tipo_Funcionario VARCHAR2(10) not null CHECK( tipo_Funcionario IN ('atendente', 'vendedor') ) 
 );
 
 alter table Funcionario add constraint fk_funcionario_pessoa foreign key (id_funcionario) references Pessoa (id);
