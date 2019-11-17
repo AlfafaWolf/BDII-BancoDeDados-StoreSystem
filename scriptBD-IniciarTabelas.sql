@@ -25,7 +25,7 @@ create table Endereco(
 	Cidade varchar(50) not null,
 	Estado varchar(50) not null,
 	Numero number(5) not null,
-	CEP number(10) not null,
+	CEP varchar(9) not null,
 	Complemento varchar(70)
 );
 
