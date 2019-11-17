@@ -172,6 +172,7 @@ alter table Item add constraint fk_Item_Venda foreign key (id_Venda) references 
 create table Compra(
 	id number primary key,
 	QtdComprada number(5) not null,
+	ValorCompra number(11, 2) not null,
 	DataCompra date not null,
 	FormaPagamento varchar(32),
 	id_Produto number not null,
