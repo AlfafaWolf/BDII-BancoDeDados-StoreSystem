@@ -36,9 +36,9 @@ create table Empresa(
 	id number primary key,   
 	Nome varchar(50) not null,   
 	Razao_Social varchar(50) not null,   
-	CNPJ varchar(14) not null,   
+	CNPJ varchar(18) not null,   
 	Telefone varchar(15) not null,   
-	Nome_Contato varchar(50) not null,    
+	Email varchar(50) not null,    
 	id_endereco number not null, 
 	tipo_Empresa VARCHAR2(10) not null CHECK( tipo_Empresa IN ('clientepj', 'filial', 'fornecedor') )  
 );
