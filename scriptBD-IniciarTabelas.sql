@@ -68,7 +68,7 @@ create table Funcionario(
 	Matricula varchar(20) not null,
 	Data_Admissao date not null,
 	Data_Demissao date,
-	Salario number(5,2) not null,
+	Salario number(8,2) not null,
 	id_funcionario number primary key,
 	tipo_Funcionario VARCHAR2(10) not null CHECK( tipo_Funcionario IN ('atendente', 'vendedor') ) 
 );
