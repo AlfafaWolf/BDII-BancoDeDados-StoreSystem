@@ -142,7 +142,7 @@ create table Alocacao(
 
 alter table Alocacao add constraint fk_Alocacao_Empresa foreign key (id_Empresa) references Empresa (id);
 alter table Alocacao add constraint fk_Alocacao_Vendedor foreign key (id_Vendedor) references Vendedor (id_vendedor);
-
+alter table Alocacao add constraint uk_Alocacao unique (id_Empresa, id_Vendedor);
 
 create table Produto(
 	id number primary key,
