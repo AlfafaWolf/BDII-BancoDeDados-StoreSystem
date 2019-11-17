@@ -57,7 +57,7 @@ create table Pessoa(
 	Data_Nasc date not null,
 	Email varchar(40) not null,
 	id_endereco number not null,
-	tipo_Pessoa VARCHAR2(10) not null CHECK( tipo_Pessoa IN ('funcionario', 'clientepf') ) 
+	tipo_Pessoa VARCHAR2(11) not null CHECK( tipo_Pessoa IN ('funcionario', 'clientepf') ) 
 );
 
 alter table Pessoa add constraint fk_pessoa_endereco foreign key (id_endereco) references Endereco (id);
