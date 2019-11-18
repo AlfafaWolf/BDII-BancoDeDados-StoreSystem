@@ -1,7 +1,7 @@
-/* SEQUENCE */
+/*************** SEQUENCE ***************/
 CREATE SEQUENCE func_matriculaid_seq START WITH 1000;
 
-/* TRIGGERS */
+/*************** TRIGGERS ***************/
 /* */
 create or replace trigger "COMPRA_PRODUTO"
 
@@ -30,7 +30,7 @@ begin
 
 end;
 
-/* STORED PROCEDURES */
+/*************** STORED PROCEDURES ***************/
 /* */
 CREATE OR REPLACE PROCEDURE "ADD_FUNCIONARIO" (
     id number,
@@ -116,7 +116,7 @@ BEGIN
         INSERT INTO ATENDENTE(id_atendente, ramal) VALUES (id, Ramal);
     ELSE
         dbms_output.put_line('TIPO INVALIDO');
-        dbms_output.put_line('USE ''a'' para atendente ou ''v'' para vendedor');
+        dbms_output.put_line('USE [a] para atendente ou [v] para vendedor');
     
     END IF;
 	
