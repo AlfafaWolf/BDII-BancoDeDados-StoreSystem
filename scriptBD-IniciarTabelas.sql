@@ -50,8 +50,8 @@ alter table Empresa add constraint uk_empresa unique (CNPJ);
 create table Pessoa(
 	id number primary key,
 	Nome varchar(50) not null,
-	CPF varchar(11) not null,
-	RG varchar(11) not null,
+	CPF varchar(14) not null,
+	RG varchar(14) not null,
 	Sexo varchar(10) not null,
 	Telefone varchar(15) not null,
 	Data_Nasc date not null,
