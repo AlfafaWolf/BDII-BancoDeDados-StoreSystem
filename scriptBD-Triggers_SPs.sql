@@ -1,7 +1,7 @@
-/*************** SEQUENCE ***************/
+/* SEQUENCE */
 CREATE SEQUENCE func_matriculaid_seq START WITH 1000;
 
-/*************** TRIGGERS ***************/
+/* TRIGGERS */
 /* */
 create or replace trigger "COMPRA_PRODUTO"
 
@@ -30,7 +30,7 @@ begin
 
 end;
 
-/*************** STORED PROCEDURES ***************/
+/* STORED PROCEDURES */
 /* */
 CREATE OR REPLACE PROCEDURE "ADD_FUNCIONARIO" (
     id number,
