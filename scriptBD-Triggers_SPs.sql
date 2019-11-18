@@ -1,3 +1,7 @@
+/*************** SEQUENCE ***************/
+CREATE SEQUENCE func_matriculaid_seq START WITH 1000;
+
+/*************** TRIGGERS ***************/
 /* */
 create or replace trigger "COMPRA_PRODUTO"
 
@@ -26,6 +30,7 @@ begin
 
 end;
 
+/*************** STORED PROCEDURES ***************/
 /* */
 CREATE OR REPLACE PROCEDURE "ADD_FUNCIONARIO" (
     id number,
@@ -72,3 +77,57 @@ BEGIN
     
     INSERT INTO VENDEDOR(id_vendedor, Reputacao, QtdVendas) VALUES (id, 10, 0);
 END ADD_VENDEDOR;
+
+/* */
+CREATE OR REPLACE PROCEDURE "ADD_FUNC"(
+    id number,
+    Nome varchar,
+    CPF varchar,
+    RG varchar,
+    Sexo varchar,
+    Telefone varchar,
+    Data_Nasc date,
+    Email varchar,
+    id_endereco number,
+	Data_Admissao date,
+	Salario number,
+	Ramal varchar,
+	Tipo varchar
+)
+IS
+    vEXCEPTION EXCEPTION;
+    vMatricula varchar(20);
+    vPeriodo varchar(10);
+BEGIN
+    vPeriodo := TO_CHAR(Data_Admissao, 'YYYY');
+    vMatricula := concat(vPeriodo, 'F');
+    
+    IF Tipo = 'v' THEN
+        vMatricula := concat(vMatricula, 'V');
+        vMatricula := concat(vMatricula, func_matriculaid_seq.NEXTVAL);
+        INSERT INTO PESSOA(id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, tipo_Pessoa) VALUES (id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, 'funcionario');
+        INSERT INTO FUNCIONARIO(id_funcionario, Matricula, Data_Admissao, Salario, tipo_Funcionario) VALUES (id, vMatricula, Data_Admissao, Salario, 'vendedor');
+        INSERT INTO VENDEDOR(id_vendedor, Reputacao, QtdVendas) VALUES (id, 10, 0);
+    ELSIF Tipo = 'a' THEN
+        vMatricula := concat(vMatricula, 'A');
+        vMatricula := concat(vMatricula, func_matriculaid_seq.NEXTVAL);
+        INSERT INTO PESSOA(id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, tipo_Pessoa) VALUES (id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, 'funcionario');
+        INSERT INTO FUNCIONARIO(id_funcionario, Matricula, Data_Admissao, Salario, tipo_Funcionario) VALUES (id, vMatricula, Data_Admissao, Salario, 'atendente');
+        INSERT INTO ATENDENTE(id_atendente, ramal) VALUES (id, Ramal);
+    ELSE
+        dbms_output.put_line('TIPO INVALIDO');
+        dbms_output.put_line('USE ''a'' para atendente ou ''v'' para vendedor');
+    
+    END IF;
+	
+	EXCEPTION
+        WHEN OTHERS THEN      -- se qualquer erro ocorrer
+        
+        DBMS_OUTPUT.PUT_LINE('----------------------------------');
+        DBMS_OUTPUT.PUT_LINE('Erro na execução da função.');
+        DBMS_OUTPUT.PUT_LINE('Entre em contato com o administrador.');
+        DBMS_OUTPUT.PUT_LINE('Código Oracle: ' || SQLCODE);
+        DBMS_OUTPUT.PUT_LINE('Mensagem Oracle: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('----------------------------------');
+
+END ADD_FUNC;
