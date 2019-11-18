@@ -116,7 +116,7 @@ BEGIN
         INSERT INTO ATENDENTE(id_atendente, ramal) VALUES (id, Ramal);
     ELSE
         dbms_output.put_line('TIPO INVALIDO');
-        dbms_output.put_line('USE [a] para atendente ou [v] para vendedor');
+        dbms_output.put_line('USE ''a'' para atendente ou ''v'' para vendedor');
     
     END IF;
 	
