@@ -94,10 +94,9 @@ alter table Vendedor add constraint fk_vendedor_pessoa foreign key (id_Vendedor)
 
 
 create table Cliente_PF(
-	Usuario varchar(15) not null,
-	Senha varchar(12) not null,
-	id_clientePF number primary key,
-	id_endereco number not null
+	Usuario varchar(40) not null,
+	Senha varchar(25) not null,
+	id_clientePF number primary key
 );
 
 alter table Cliente_PF add constraint fk_Cliente_PF_pessoa foreign key (id_clientePF) references Pessoa (id);

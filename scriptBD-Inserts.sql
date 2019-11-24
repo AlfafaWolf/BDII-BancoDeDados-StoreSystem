@@ -89,3 +89,15 @@ EXEC ADD_FUNC('Maria Marques', '514.534.847-63', '60.859.546-6', 'f', '(43) 9148
 EXEC ADD_FUNC('Ines Coimbra', '288.624.467-70', '36.082.799-7', 'm', '(94) 98346-7583', TO_DATE('1971/07/15', 'yyyy/mm/dd'), 'ines.coimbra@gmail.com', 106, TO_DATE('2017/04/20', 'yyyy/mm/dd'), 1274.2, '(25) 96392-2756', null, 'a');
 EXEC ADD_FUNC('Duarte Ferreira', '463.482.950-31', '42.489.890-6', 'm', '(00) 91336-9928', TO_DATE('1989/04/02', 'yyyy/mm/dd'), 'duarte.ferreira@hotmail.com', 109, TO_DATE('2013/12/28', 'yyyy/mm/dd'), 1129.38, '(16) 94758-6308', null, 'a');
 EXEC ADD_FUNC('Matilde Guimaraes', '172.071.449-89', '09.857.988-9', 'm', '(58) 96637-2021', TO_DATE('1962/05/10', 'yyyy/mm/dd'), 'matilde.guimaraes@gmail.com', 103, TO_DATE('2016/08/21', 'yyyy/mm/dd'), 1938.6, '(70) 98634-1815', null, 'a');
+
+/* CLIENTE_PF */
+EXEC ADD_CLIENTE_PF('Maria Ferreira', '025.408.948-09', '14.423.674-9', 'f', '(57) 95613-1332', TO_DATE('1989/12/19', 'yyyy/mm/dd'), 'maria.ferreira@gmail.com', 103, '7m7Afaby');
+EXEC ADD_CLIENTE_PF('Maria Braganca', '270.128.665-70', '18.526.208-8', 'f', '(12) 90816-9277', TO_DATE('1960/05/22', 'yyyy/mm/dd'), 'maria.braganca@gmail.com', 107, '3TouYSUg');
+EXEC ADD_CLIENTE_PF('Ines Pereira', '788.398.016-07', '35.090.614-8', 'f', '(02) 95916-9064', TO_DATE('1961/05/28', 'yyyy/mm/dd'), 'ines.pereira@hotmail.com', 107, 'vDZaoEUQ');
+EXEC ADD_CLIENTE_PF('Gabriel Silva', '093.609.546-50', '66.390.405-1', 'm', '(30) 93745-3619', TO_DATE('1983/11/16', 'yyyy/mm/dd'), 'gabriel.silva@hotmail.com', 109, '0tzusocW');
+EXEC ADD_CLIENTE_PF('Duarte Castro', '317.284.861-85', '70.906.379-8', 'f', '(43) 91750-0962', TO_DATE('1999/02/19', 'yyyy/mm/dd'), 'duarte.castro@gmail.com', 104, 'uECCemHU');
+EXEC ADD_CLIENTE_PF('Miguel Martins', '280.956.700-54', '29.531.221-5', 'm', '(03) 96940-6215', TO_DATE('1964/10/13', 'yyyy/mm/dd'), 'miguel.martins@hotmail.com', 108, 'zYa5jrov');
+EXEC ADD_CLIENTE_PF('Francisca Alves', '953.639.896-86', '74.103.755-6', 'm', '(70) 91246-1271', TO_DATE('1978/05/14', 'yyyy/mm/dd'), 'francisca.alves@gmail.com', 103, 'z7XHiIEz');
+EXEC ADD_CLIENTE_PF('Leonor Alvares', '397.664.199-75', '85.413.107-0', 'f', '(34) 97828-2134', TO_DATE('1974/04/21', 'yyyy/mm/dd'), 'leonor.alvares@gmail.com', 102, 'FlMxgxoh');
+EXEC ADD_CLIENTE_PF('Martim Braganca', '284.582.682-53', '01.764.956-6', 'm', '(22) 94148-6374', TO_DATE('1963/08/12', 'yyyy/mm/dd'), 'martim.braganca@hotmail.com', 110, 'lqD4E8nY');
+EXEC ADD_CLIENTE_PF('Joao Lopes', '381.801.608-23', '72.421.265-0', 'f', '(64) 98863-7548', TO_DATE('1969/11/19', 'yyyy/mm/dd'), 'joao.lopes@hotmail.com', 105, '6C74G1N9');

@@ -2,6 +2,7 @@
 CREATE SEQUENCE func_matriculaid_seq START WITH 1000;
 CREATE SEQUENCE func_id_seq START WITH 100;
 CREATE SEQUENCE aloc_id_seq START WITH 100;
+CREATE SEQUENCE clientepf_id_seq START WITH 100;
 
 /*************** TRIGGERS ***************/
 /* */
@@ -162,3 +163,24 @@ BEGIN
     END IF;
 
 END ADD_VENDA;
+
+/* */
+CREATE OR REPLACE PROCEDURE "ADD_CLIENTE_PF"(
+    Nome varchar,
+    CPF varchar,
+    RG varchar,
+    Sexo varchar,
+    Telefone varchar,
+    Data_Nasc date,
+    Email varchar,
+    id_endereco number,
+    Senha varchar
+)
+IS
+    vEXCEPTION EXCEPTION;
+    vId number;
+BEGIN
+    vId := clientepf_id_seq.NEXTVAL;
+    INSERT INTO PESSOA(id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, tipo_Pessoa) VALUES (vId, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, 'clientepf');
+    INSERT INTO CLIENTE_PF(id_clientePF, Usuario, Senha) VALUES (vId, Email, Senha);
+END ADD_CLIENTE_PF;
