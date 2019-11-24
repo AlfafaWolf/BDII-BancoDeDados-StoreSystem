@@ -1,5 +1,7 @@
 /*************** SEQUENCE ***************/
 CREATE SEQUENCE func_matriculaid_seq START WITH 1000;
+CREATE SEQUENCE func_id_seq START WITH 100;
+CREATE SEQUENCE aloc_id_seq START WITH 100;
 
 /*************** TRIGGERS ***************/
 /* */
@@ -80,7 +82,6 @@ END ADD_VENDEDOR;
 
 /* */
 CREATE OR REPLACE PROCEDURE "ADD_FUNC"(
-    id number,
     Nome varchar,
     CPF varchar,
     RG varchar,
@@ -92,28 +93,32 @@ CREATE OR REPLACE PROCEDURE "ADD_FUNC"(
 	Data_Admissao date,
 	Salario number,
 	Ramal varchar,
+    Empresa number,
 	Tipo varchar
 )
 IS
     vEXCEPTION EXCEPTION;
     vMatricula varchar(20);
     vPeriodo varchar(10);
+    vId number;
 BEGIN
     vPeriodo := TO_CHAR(Data_Admissao, 'YYYY');
     vMatricula := concat(vPeriodo, 'F');
+    vId := func_id_seq.NEXTVAL; 
     
     IF Tipo = 'v' THEN
         vMatricula := concat(vMatricula, 'V');
         vMatricula := concat(vMatricula, func_matriculaid_seq.NEXTVAL);
-        INSERT INTO PESSOA(id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, tipo_Pessoa) VALUES (id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, 'funcionario');
-        INSERT INTO FUNCIONARIO(id_funcionario, Matricula, Data_Admissao, Salario, tipo_Funcionario) VALUES (id, vMatricula, Data_Admissao, Salario, 'vendedor');
-        INSERT INTO VENDEDOR(id_vendedor, Reputacao, QtdVendas) VALUES (id, 10, 0);
+        INSERT INTO PESSOA(id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, tipo_Pessoa) VALUES (vId, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, 'funcionario');
+        INSERT INTO FUNCIONARIO(id_funcionario, Matricula, Data_Admissao, Salario, tipo_Funcionario) VALUES (vId, vMatricula, Data_Admissao, Salario, 'vendedor');
+        INSERT INTO VENDEDOR(id_vendedor, Reputacao, QtdVendas) VALUES (vId, 10, 0);
+        INSERT INTO ALOCACAO(id, id_Empresa, id_Vendedor) VALUES (aloc_id_seq.NEXTVAL, Empresa, vId);
     ELSIF Tipo = 'a' THEN
         vMatricula := concat(vMatricula, 'A');
         vMatricula := concat(vMatricula, func_matriculaid_seq.NEXTVAL);
-        INSERT INTO PESSOA(id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, tipo_Pessoa) VALUES (id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, 'funcionario');
-        INSERT INTO FUNCIONARIO(id_funcionario, Matricula, Data_Admissao, Salario, tipo_Funcionario) VALUES (id, vMatricula, Data_Admissao, Salario, 'atendente');
-        INSERT INTO ATENDENTE(id_atendente, ramal) VALUES (id, Ramal);
+        INSERT INTO PESSOA(id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, tipo_Pessoa) VALUES (vId, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, 'funcionario');
+        INSERT INTO FUNCIONARIO(id_funcionario, Matricula, Data_Admissao, Salario, tipo_Funcionario) VALUES (vId, vMatricula, Data_Admissao, Salario, 'atendente');
+        INSERT INTO ATENDENTE(id_atendente, ramal) VALUES (vId, Ramal);
     ELSE
         dbms_output.put_line('TIPO INVALIDO');
         dbms_output.put_line('USE ''a'' para atendente ou ''v'' para vendedor');
