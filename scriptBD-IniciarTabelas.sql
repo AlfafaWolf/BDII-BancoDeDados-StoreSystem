@@ -117,8 +117,7 @@ alter table Venda add constraint uk_Venda unique (DataVenda, id_vendedor);
 
 
 create table Venda_Varejo(
-	idVenda_Varejo number primary key,
-	id_Venda number not null,
+	id_Venda number primary key,
 	id_Cliente_PF number not null
 );
 
@@ -126,8 +125,7 @@ alter table Venda_Varejo add constraint fk_Venda_Varejo_Cliente_PF foreign key (
 
 
 create table Venda_Atacado(
-	idVenda_Atacado number primary key,
-	id_Venda number not null,
+	id_Venda number primary key,
 	id_Empresa number not null
 );
 

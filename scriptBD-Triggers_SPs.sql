@@ -136,3 +136,29 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('----------------------------------');
 
 END ADD_FUNC;
+
+/* */
+CREATE OR REPLACE PROCEDURE "ADD_VENDA"(
+    id number,
+    DataVenda date,
+    FormaPagamento varchar,
+    id_vendedor number,
+    id_Cliente,
+    tipo varchar
+)
+IS
+  vEXCEPTION EXCEPTION;
+BEGIN
+
+    IF tipo = 'a' THEN
+        INSERT INTO Venda(id, DataVenda, FormaPagamento, id_vendedor, tipo_venda) VALUES (id, DataVenda, FormaPagamento, id_vendedor, 'atacado');
+        INSERT INTO Venda_Atacado(id_venda, id_Empresa) VALUES (id, id_Cliente);
+    ELSIF tipo = 'v' THEN
+        INSERT INTO Venda(id, DataVenda, FormaPagamento, id_vendedor, tipo_venda) VALUES (id, DataVenda, FormaPagamento, id_vendedor, 'varejo');
+        INSERT INTO Venda_Varejo(id_venda, id_Cliente_PF) VALUES (id, id_Cliente);
+    ELSE
+        dbms_output.put_line('TIPO INVALIDO');
+        dbms_output.put_line('USE ''a'' para atacado ou ''v'' para varejo');
+    END IF;
+
+END ADD_VENDA;
