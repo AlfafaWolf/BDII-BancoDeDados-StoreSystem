@@ -1,8 +1,8 @@
 /*************** SEQUENCE ***************/
 CREATE SEQUENCE func_matriculaid_seq START WITH 1000;
-CREATE SEQUENCE func_id_seq START WITH 100;
+CREATE SEQUENCE pessoa_id_seq START WITH 100;
 CREATE SEQUENCE aloc_id_seq START WITH 100;
-CREATE SEQUENCE clientepf_id_seq START WITH 100;
+CREATE SEQUENCE venda_id_seq START WITH 100;
 
 /*************** TRIGGERS ***************/
 /* */
@@ -30,6 +30,21 @@ begin
     update produto
     set QtdEstoque = QtdEstoque - :new.Qtd
     where produto.id = :new.id_Produto;
+
+end;
+
+create or replace trigger "AUTO_INCREMENTO_ITEM" BEFORE insert on ITEM
+
+FOR EACH ROW
+DECLARE
+    vId number;
+begin
+
+  SELECT NVL(MAX(id), 0)
+  INTO   vId
+  FROM   item;
+  
+  :new.id := vId + 1;
 
 end;
 
@@ -105,7 +120,7 @@ IS
 BEGIN
     vPeriodo := TO_CHAR(Data_Admissao, 'YYYY');
     vMatricula := concat(vPeriodo, 'F');
-    vId := func_id_seq.NEXTVAL; 
+    vId := pessoa_id_seq.NEXTVAL; 
     
     IF Tipo = 'v' THEN
         vMatricula := concat(vMatricula, 'V');
@@ -140,27 +155,37 @@ END ADD_FUNC;
 
 /* */
 CREATE OR REPLACE PROCEDURE "ADD_VENDA"(
-    id number,
     DataVenda date,
     FormaPagamento varchar,
     id_vendedor number,
-    id_Cliente,
+    id_Cliente number,
     tipo varchar
 )
 IS
   vEXCEPTION EXCEPTION;
+  vId number;
 BEGIN
-
+    vId := venda_id_seq.NEXTVAL;
     IF tipo = 'a' THEN
-        INSERT INTO Venda(id, DataVenda, FormaPagamento, id_vendedor, tipo_venda) VALUES (id, DataVenda, FormaPagamento, id_vendedor, 'atacado');
-        INSERT INTO Venda_Atacado(id_venda, id_Empresa) VALUES (id, id_Cliente);
+        INSERT INTO Venda(id, DataVenda, FormaPagamento, id_vendedor, tipo_venda) VALUES (vId, DataVenda, FormaPagamento, id_vendedor, 'atacado');
+        INSERT INTO Venda_Atacado(id_venda, id_Empresa) VALUES (vId, id_Cliente);
     ELSIF tipo = 'v' THEN
-        INSERT INTO Venda(id, DataVenda, FormaPagamento, id_vendedor, tipo_venda) VALUES (id, DataVenda, FormaPagamento, id_vendedor, 'varejo');
-        INSERT INTO Venda_Varejo(id_venda, id_Cliente_PF) VALUES (id, id_Cliente);
+        INSERT INTO Venda(id, DataVenda, FormaPagamento, id_vendedor, tipo_venda) VALUES (vId, DataVenda, FormaPagamento, id_vendedor, 'varejo');
+        INSERT INTO Venda_Varejo(id_venda, id_Cliente_PF) VALUES (vId, id_Cliente);
     ELSE
         dbms_output.put_line('TIPO INVALIDO');
         dbms_output.put_line('USE ''a'' para atacado ou ''v'' para varejo');
     END IF;
+
+    EXCEPTION
+        WHEN OTHERS THEN      -- se qualquer erro ocorrer
+        
+        DBMS_OUTPUT.PUT_LINE('----------------------------------');
+        DBMS_OUTPUT.PUT_LINE('Erro na execução da função.');
+        DBMS_OUTPUT.PUT_LINE('Entre em contato com o administrador.');
+        DBMS_OUTPUT.PUT_LINE('Código Oracle: ' || SQLCODE);
+        DBMS_OUTPUT.PUT_LINE('Mensagem Oracle: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('----------------------------------');
 
 END ADD_VENDA;
 
@@ -180,7 +205,7 @@ IS
     vEXCEPTION EXCEPTION;
     vId number;
 BEGIN
-    vId := clientepf_id_seq.NEXTVAL;
+    vId := pessoa_id_seq.NEXTVAL;
     INSERT INTO PESSOA(id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, tipo_Pessoa) VALUES (vId, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, 'clientepf');
     INSERT INTO CLIENTE_PF(id_clientePF, Usuario, Senha) VALUES (vId, Email, Senha);
 END ADD_CLIENTE_PF;

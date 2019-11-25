@@ -164,7 +164,7 @@ create table Item(
 
 alter table Item add constraint fk_Item_Produto foreign key (id_Produto) references Produto (id);
 alter table Item add constraint fk_Item_Venda foreign key (id_Venda) references Venda (id);
-
+alter table Item add constraint uk_Item unique (id_Produto, id_Venda);
 
 create table Compra(
 	id number primary key,
