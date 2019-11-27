@@ -134,12 +134,13 @@ alter table Venda_Atacado add constraint fk_Venda_Atacado_Empresa foreign key (i
 create table Alocacao(
 	id number primary key,
 	id_Empresa number not null,
-	id_Vendedor number not null
+	id_Vendedor number not null,
+	data date not null
 );
 
 alter table Alocacao add constraint fk_Alocacao_Empresa foreign key (id_Empresa) references Empresa (id);
 alter table Alocacao add constraint fk_Alocacao_Vendedor foreign key (id_Vendedor) references Vendedor (id_vendedor);
-alter table Alocacao add constraint uk_Alocacao unique (id_Empresa, id_Vendedor);
+alter table Alocacao add constraint uk_Alocacao unique (id_Empresa, id_Vendedor, data);
 
 create table Produto(
 	id number primary key,
@@ -184,13 +185,12 @@ create table Atendimento(
 	id number primary key,
 	Categoria varchar(32),
 	SatisfacaoCliente varchar(32),
-	id_Cliente number not null
+	id_Cliente number not null,
 	tipo_Atendimento varchar(13) not null CHECK ( tipo_Atendimento IN ('personalizado', 'automatico') ) 
 );
 
 alter table Atendimento add constraint fk_Atendimento_Cliente_PF foreign key (id_Cliente) references Cliente_PF (id_clientePF); 
 alter table Atendimento add constraint fk_Atendimento_Cliente_PJ foreign key (id_Cliente) references Empresa (id);
-alter table Atendimento add constraint fk_Atendimento_Endereco foreign key (id_Endereco) references Endereco (id);
 
 
 create table Atendimento_Personalizado(

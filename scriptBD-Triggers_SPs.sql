@@ -128,7 +128,7 @@ BEGIN
         INSERT INTO PESSOA(id, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, tipo_Pessoa) VALUES (vId, Nome, CPF, RG, Sexo, Telefone, Data_Nasc, Email, id_endereco, 'funcionario');
         INSERT INTO FUNCIONARIO(id_funcionario, Matricula, Data_Admissao, Salario, tipo_Funcionario) VALUES (vId, vMatricula, Data_Admissao, Salario, 'vendedor');
         INSERT INTO VENDEDOR(id_vendedor, Reputacao, QtdVendas) VALUES (vId, 10, 0);
-        INSERT INTO ALOCACAO(id, id_Empresa, id_Vendedor) VALUES (aloc_id_seq.NEXTVAL, Empresa, vId);
+        INSERT INTO ALOCACAO(id, id_Empresa, id_Vendedor, data) VALUES (aloc_id_seq.NEXTVAL, Empresa, vId, Data_Admissao);
     ELSIF Tipo = 'a' THEN
         vMatricula := concat(vMatricula, 'A');
         vMatricula := concat(vMatricula, func_matriculaid_seq.NEXTVAL);
