@@ -185,12 +185,8 @@ create table Atendimento(
 	id number primary key,
 	Categoria varchar(32),
 	SatisfacaoCliente varchar(32),
-	id_Cliente number not null,
 	tipo_Atendimento varchar(13) not null CHECK ( tipo_Atendimento IN ('personalizado', 'automatico') ) 
 );
-
-alter table Atendimento add constraint fk_Atendimento_Cliente_PF foreign key (id_Cliente) references Cliente_PF (id_clientePF); 
-alter table Atendimento add constraint fk_Atendimento_Cliente_PJ foreign key (id_Cliente) references Empresa (id);
 
 
 create table Atendimento_Personalizado(
@@ -199,18 +195,21 @@ create table Atendimento_Personalizado(
 	dataAtend date not null,
 	ResumoOcorrencia varchar(45),
 	Descricao varchar(150),
-	Duracao number(5)
+	Duracao number(5),
+	id_Cliente_PJ number not null
 );
-
 alter table Atendimento_Personalizado add constraint fk_Atendimento_Personalizado_Atendimento foreign key (id_Atendimento) references Atendimento (id);
 alter table Atendimento_Personalizado add constraint uk_Atendimento_Personalizado unique (Protocolo);
+alter table Atendimento_Personalizado add constraint fk_Atendimento_Personalizado_Cliente_PJ foreign key (id_Cliente_PJ) references Empresa (id);
 
 
 create table Atendimento_Automatico(
 	id_Atendimento number primary key,
 	Topico varchar(30),
 	Perguntas varchar(70) not null,
-	Respostas varchar(120) not null
+	Respostas varchar(120) not null,
+	id_Cliente_PF number not null
 );
 
 alter table Atendimento_Automatico add constraint fk_Atendimento_Automatico_Atendimento foreign key (id_Atendimento) references Atendimento (id);
+alter table Atendimento_Automatico add constraint fk_Atendimento_Automatico_Cliente_PF foreign key (id_Cliente_PF) references Cliente_PF (id_clientePF); 
